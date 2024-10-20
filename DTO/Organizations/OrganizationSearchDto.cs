@@ -3,6 +3,7 @@ using Demo.Miselaneous;
 using DTOql.Interfaces;
 using DTOql.Models;
 using System.Threading;
+using static DTOql.Utilities.Builder;
 
 namespace Demo.DTO.Organizations
 {
@@ -25,18 +26,18 @@ namespace Demo.DTO.Organizations
         public IEnumerable<DynamicProperty> GetOverrideProperties()
         {
             return new DynamicProperty[] {
-                      
+
                        new DynamicProperty
                        {
                            PropertyName=nameof(UserName),
                            Allias=nameof(UserName),
-                           SourcePropertyPath= "Users[].Name",
+                           SourcePropertyPath= _<Organization>(x=>x.Users.Select(x=>x.Name)), // "Users[].Name"
                        },
                         new DynamicProperty
                        {
                            PropertyName=nameof(UserEmail),
                            Allias=nameof(UserEmail),
-                           SourcePropertyPath= "Users[].Email",
+                           SourcePropertyPath= _<Organization>(x=>x.Users.Select(x=>x.Email)), // "Users[].Email",
                        }
            };
         }
